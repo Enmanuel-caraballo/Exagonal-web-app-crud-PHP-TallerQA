@@ -1,0 +1,12 @@
+# Variables de entorno (contiene credenciales)
+.env
+
+# Documentación interna
+DOCUMENTATION.md
+
+# Dependencias de Composer
+vendor/
+
+# IDE
+.idea/
+.vscode/

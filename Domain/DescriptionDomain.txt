@@ -1,0 +1,3 @@
+Domain: Núcleo del negocio. 
+Contiene entidades, value objects y reglas.
+ No depende de nada externo.

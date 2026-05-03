@@ -1,0 +1,2 @@
+Infrastructure/Entrypoints: Adaptadores de entrada. Reciben solicitudes (HTTP, CLI, eventos) y
+llaman a la aplicación.

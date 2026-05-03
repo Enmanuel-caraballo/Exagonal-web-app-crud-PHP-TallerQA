@@ -1,0 +1,17 @@
+Common: Configuración general. Bootstrap, inyección de dependencias, utilidades compartidas.
+
+DOMAIN: El corazón del sistema
+
+¿Qué es?
+El dominio contiene las reglas de negocio puras. Es el conocimiento del negocio expresado en código.
+No importa si usas MySQL o MongoDB. No importa si es una web o una API. Las reglas del negocio son las mismas.
+¿Qué contiene?
+Componente Responsabilidad
+Exceptions Errores del negocio (no errores técnicos)
+Enums Valores cerrados del negocio (roles, estados)
+Value Objects Tipos que encapsulan una regla de validación
+Models La entidad principal del negocio
+Events Hechos ocurridos en el dominio
+
+Regla de oro del Dominio
+El dominio nunca usa require_once hacia capas externas. Nunca conoce PDO, $_POST, HTTP ni MySQL.

@@ -1,0 +1,73 @@
+Application: Casos de uso. Orquesta el flujo de la aplicación y usa el dominio. No contiene lógica
+de negocio.
+
+
+
+APPLICATION: Los casos de uso
+
+¿Qué es?
+La capa de aplicación orquesta las operaciones.
+No contiene lógica de negocio propia; 
+delega en el dominio.
+
+ Su trabajo es:
+1. Recibir un comando o consulta
+2. Verificar precondiciones (¿ya existe el usuario?)
+3. Crear o modificar un modelo de dominio
+4. Llamar al puerto de salida correspondiente
+5. Retornar el resultado
+
+CQRS: Commands y Queries
+Este proyecto aplica CQRS (Command Query Responsibility Segregation): 
+separar las operaciones que modifican estado de las
+que solo leen:
+
+● Command: objeto que representa una intención de cambio 
+(CreateUserCommand, UpdateUserCommand,
+DeleteUserCommand). 
+No retorna datos de negocio, solo el resultado de la operación.
+
+
+● Query: objeto que representa una intención de consulta
+(GetUserByIdQuery, GetAllUsersQuery).
+No modifica estado.
+
+
+
+● Puertos de Entrada (Use Cases)
+Son interfaces que definen qué puede hacer el sistema desde el exterior.
+CreateUserUseCase → execute(CreateUserCommand): UserModel
+UpdateUserUseCase → execute(UpdateUserCommand): UserModel
+DeleteUserUseCase → execute(DeleteUserCommand): void
+GetUserByIdUseCase → execute(GetUserByIdQuery): UserModel
+GetAllUsersUseCase → execute(GetAllUsersQuery): UserModel[]
+
+Son contratos. El entrypoint llama al contrato,
+no a la implementación. Esto permite cambiar la implementación sin tocar el
+entrypoint.
+
+
+● Puertos de Salida
+Son interfaces que definen qué necesita la aplicación del exterior 
+(base de datos, servicios externos, etc.).
+
+SaveUserPort → save(UserModel): UserModel
+UpdateUserPort → update(UserModel): UserModel
+DeleteUserPort → delete(UserId): void
+GetUserByIdPort → getById(UserId): ?UserModel
+GetUserByEmailPort → getByEmail(UserEmail): ?UserModel
+GetAllUsersPort → getAll(): UserModel[]
+Los servicios de aplicación llaman a estas interfaces.
+No saben si detrás hay MySQL, MongoDB o un array en memoria. Eso es la
+inversión de dependencias.
+
+
+Servicios de Aplicación
+● Implementan los puertos de entrada. Ejemplo de lógica de CreateUserService:
+1. Recibe CreateUserCommand
+2. Crea un UserEmail (Value Object) con el email del comando
+3. Pregunta al GetUserByEmailPort: ¿ya existe este email?
+4. Si existe → lanza UserAlreadyExistsException
+5. Si no → usa UserApplicationMapper para construir el UserModel
+6. Llama a SaveUserPort.save(user)
+7. Retorna el UserModel guardado

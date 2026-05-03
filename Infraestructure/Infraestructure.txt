@@ -1,0 +1,23 @@
+Infrastructure: Implementaciones técnicas concretas (base de datos, APIs, frameworks).
+
+
+INFRASTRUCTURE / Adapters: La tecnología concreta
+
+Adaptadores de Salida
+● Implementan los puertos de salida. En este proyecto,
+UserRepositoryMySQL implementa los 6 puertos de salida a la vez
+usando PDO.
+La clave: nunca expone SQL ni PDO hacia Application. 
+Transforma modelos de dominio en SQL y SQL en modelos de dominio.
+UserModel → UserPersistenceDto → SQL INSERT
+SQL SELECT → fila de BD → UserEntity → UserModel
+Cada capa de transformación tiene un propósito:
+● UserPersistenceDto: datos planos listos para ir a SQL
+● UserEntity: representa la fila tal como llega de la BD
+● UserPersistenceMapper: conoce cómo convertir entre estas formas
+Adaptadores de Entrada (Entrypoints)
+Reciben la petición del mundo exterior y la traducen al lenguaje de la aplicación.
+● El controlador web (UserController) recibe un CreateUserWebRequest 
+(datos del formulario HTTP), lo convierte en un
+CreateUserCommand, y llama al caso de uso.
+Nunca mezcla lógica de negocio con lógica HTTP.

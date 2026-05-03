@@ -1,0 +1,2 @@
+Infrastructure/Adapters: Adaptadores de salida. Conectan el sistema con el exterior (DB, servicios
+externos).
