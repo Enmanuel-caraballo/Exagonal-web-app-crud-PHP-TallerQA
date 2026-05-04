@@ -4,6 +4,6 @@ class UserAlreadyExistException extends DomainException
 {
 
     public static function becauseEmailAlreadyExists(){
-        return new self('No se encontro usuario con el email: ');
+        return new self('Este email ya esta siendo utilizado');
     }
 }
