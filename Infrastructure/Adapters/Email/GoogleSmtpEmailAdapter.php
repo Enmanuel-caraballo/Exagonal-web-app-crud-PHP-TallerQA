@@ -20,7 +20,7 @@ final class GoogleSmtpEmailAdapter implements SentVerificationEmailPort
             $mail->Username = getenv('SMTP_USER') ?: '';
             $mail->Password = getenv('SMTP_PASS') ?: '';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port = 587;
+            $mail->Port = 465;
             $mail->CharSet = 'UTF-8';
 
             $mail->setFrom('enmanuelcm03@gmail.com', 'Users system');
@@ -33,8 +33,6 @@ final class GoogleSmtpEmailAdapter implements SentVerificationEmailPort
             $link = "{$baseUrl}/index.php?route=auth.verify&token={$verificationToken}&email={$email}";
 
             $mail->Body = "Hola {$name},<br><br>Por favor, haz clic en el siguiente enlace para activar tu cuenta:<br><a href='{$link}'>Verificar mi cuenta</a>";
-
-            $mail->SMTPDebug = 2;
 
             $mail->send();
 
