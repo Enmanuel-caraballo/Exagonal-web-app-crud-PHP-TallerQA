@@ -34,6 +34,8 @@ final class GoogleSmtpEmailAdapter implements SentVerificationEmailPort
 
             $mail->Body = "Hola {$name},<br><br>Por favor, haz clic en el siguiente enlace para activar tu cuenta:<br><a href='{$link}'>Verificar mi cuenta</a>";
 
+            $mail->SMTPDebug = 2;
+
             $mail->send();
 
         }catch (Exception $e){
