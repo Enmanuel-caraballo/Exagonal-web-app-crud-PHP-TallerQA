@@ -20,7 +20,7 @@ final class GoogleSmtpEmailAdapter implements SentVerificationEmailPort
             $mail->Username = getenv('SMTP_USER') ?: '';
             $mail->Password = getenv('SMTP_PASS') ?: '';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port = 465;
+            $mail->Port = 587;
             $mail->CharSet = 'UTF-8';
 
             $mail->setFrom('enmanuelcm03@gmail.com', 'Users system');
