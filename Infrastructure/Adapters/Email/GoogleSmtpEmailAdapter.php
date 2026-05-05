@@ -15,12 +15,12 @@ final class GoogleSmtpEmailAdapter implements SentVerificationEmailPort
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
-            $mail->Host = str_replace('"', '', getenv('SMTP_HOST') ?: 'sandbox.smtp.mailtrap.io');
+            $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = str_replace('"', '', getenv('SMTP_USER') ?: '');
-            $mail->Password = str_replace('"', '', getenv('SMTP_PASS') ?: '');
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = (int) str_replace('"', '', getenv('SMTP_PORT') ?: '2525');
+            $mail->Username = getenv('SMTP_USER') ?: '';
+            $mail->Password = getenv('SMTP_PASS') ?: '';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = 465;
             $mail->CharSet = 'UTF-8';
 
             $mail->setFrom('enmanuelcm03@gmail.com', 'Users system');
