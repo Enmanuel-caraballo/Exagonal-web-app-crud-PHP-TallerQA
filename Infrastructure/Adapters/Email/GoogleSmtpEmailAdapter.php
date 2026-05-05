@@ -29,7 +29,8 @@ final class GoogleSmtpEmailAdapter implements SentVerificationEmailPort
             $mail->isHTML(true);
             $mail->Subject = 'Confirma tu Email';
 
-            $link = "http://localhost/crud-usuarios/public/index.php?route=auth.verify&token={$verificationToken}&email={$email}";
+            $baseUrl = rtrim(getenv('APP_URL') ?: 'http://localhost/crud-usuarios/public', '/');
+            $link = "{$baseUrl}/index.php?route=auth.verify&token={$verificationToken}&email={$email}";
 
             $mail->Body = "Hola {$name},<br><br>Por favor, haz clic en el siguiente enlace para activar tu cuenta:<br><a href='{$link}'>Verificar mi cuenta</a>";
 
